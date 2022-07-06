@@ -1,0 +1,40 @@
+<div class="text-center mb-5">
+  <p>
+    <img class="rounded" src=<%= "/characters/#{@character.image}" %> alt="Character" width="320px" height="320px">
+  </p>
+  <h1 class="font-weight-bold h3"><%= @character.name %></h1>
+  <% if login? %>
+    <% if @average_point %>
+      <p class="font-weight-bold h4 mb-3">平均：<%= @average_point %>p</p>
+    <% end %>
+  <% end %>
+  <p class="mt-5"><%= link_to '撃破数登録', "/battle_records/new/#{@character.id}", class: 'btn btn-lg btn-primary' %></p>
+  <% @rank_id = 1 %>
+  <% while @rank_id <= @ranks_count %>
+  <p class="mt-5 font-weight-bold h3"><%= Rank.find(@rank_id).name %></p>
+    <div class="row mt-3">
+      <table class="offset-lg-3 col-lg-6 table table-bordered">
+        <tr>
+          <th>ステージ</th>
+          <th>最高</th>
+          <th>合計</th>
+        </tr>
+          <% @stage_id = 1 %>
+          <% while @stage_id <= @stages_count %>
+            <tr>
+              <th><%= Stage.find(@stage_id).name %></th>
+              <% if BattleRecord.find_by(user_id: session[:user_id], character_id: params[:id], rank_id: @rank_id, stage_id: @stage_id) %>
+                <th><%= BattleRecord.where(user_id: session[:user_id], character_id: params[:id], rank_id: @rank_id, stage_id: @stage_id).maximum(:point) %></th>
+                <th><%= BattleRecord.where(user_id: session[:user_id], character_id: params[:id], rank_id: @rank_id, stage_id: @stage_id).sum(:point) %></th>
+              <% else %>
+                <th>0</th>
+                <th>0</th>
+              <% end %>
+            </tr>
+            <% @stage_id += 1 %>
+          <% end %>
+      </table>
+    </div>
+    <% @rank_id += 1 %>
+  <% end %>
+</div>

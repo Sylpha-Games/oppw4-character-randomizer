@@ -1,0 +1,24 @@
+<div class="text-center mb-5">
+  <h1>キャラクターカテゴリ一覧</h1>
+  <div class="row mt-5">
+    <% @character_categories.each do |character_category| %>
+      <div class="col-xl-6 border pt-5 pb-3">
+        <p>
+          <img class="rounded" src=<%= "/character_categories/#{character_category.image}" %> alt="Character Category" width="320px" height="320px">
+        </p>
+        <p><%= link_to character_category.name, character_category_path(character_category), class: 'font-weight-bold h4' %></p>
+      </div>
+    <% end %>
+  </div>
+  <h1 class="mt-5">アクションタイプ一覧</h1>
+  <div class="row mt-5">
+    <% @action_types.each do |action_type| %>
+      <div class="col-xl-6 border pt-5 pb-3">
+        <p>
+          <img class="rounded" src=<%= "/action_types/#{action_type.image}" %> alt="Action Type" width="320px" height="320px">
+        </p>
+        <p><%= link_to action_type.name, action_type_path(action_type), class: 'font-weight-bold h4' %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

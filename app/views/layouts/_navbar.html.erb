@@ -1,0 +1,23 @@
+<header class="mb-5">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">海賊無双4 キャラランダム</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <% if login? %>
+          <li class="nav-item"><%= link_to 'キャラクター', character_categories_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to 'ステージ', ranks_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to 'バトル記録', battle_records_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to '実績', achievement_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to current_user.name, user_path(current_user), class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>
+        <% else %>
+          <li class="nav-item"><%= link_to '新規登録', signup_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to 'ログイン', login_path, class: 'nav-link' %></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</header>

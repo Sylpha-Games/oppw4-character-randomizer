@@ -1,0 +1,22 @@
+<div class="text-center mb-5">
+  <h1>バトル記録一覧</h1>
+  <div class="d-flex justify-content-center mt-5">
+    <%= paginate @battle_records %>
+  </div>
+  <% @battle_records.each do |battle_record| %>
+    <p class="font-weight-bold h4 mt-3"><%= link_to battle_record.created_at.to_s(:datetime_jp), edit_battle_record_path(battle_record), class: 'font-weight-bold h5' %></p>
+    <div class="row">
+      <table class="table table-bordered offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10">
+        <tr>
+          <th class="w-25"><img class="rounded" src=<%= "/characters/#{battle_record.character.image}" %> alt="Character" width="90px" height="90px"></th>
+          <th class="w-25"><img class="rounded" src=<%= "/ranks/#{battle_record.rank.image}" %> alt="Rank" width="160px" height="90px"></th>
+          <th class="w-25"><img class="rounded" src=<%= "/stages/#{battle_record.stage.image}" %> alt="Stage" width="90px" height="90px"></th>
+          <th class="w-25 align-middle"><%= battle_record.point %></th>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+  <div class="d-flex justify-content-center mt-5">
+    <%= paginate @battle_records %>
+  </div>
+</div>

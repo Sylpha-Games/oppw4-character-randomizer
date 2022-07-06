@@ -1,0 +1,18 @@
+<div class="text-center mb-5">
+  <h1><%= @character_category.name %>一覧</h1>
+  <div class="row mt-5">
+    <% @characters.each do |character| %>
+      <div class="col-xl-6 border pt-5 pb-3">
+        <p>
+          <img class="rounded" src=<%= "/characters/#{character.image}" %> alt="Character" width="320px" height="320px">
+        </p>
+        <p><%= link_to character.name, character_path(character), class: 'font-weight-bold h4' %></p>
+        <% if login? %>
+          <% if BattleRecord.find_by(user_id: session[:user_id], character_id: character.id) %>
+            <p class="font-weight-bold h4 mb-3">平均：<%= BattleRecord.where(user_id: session[:user_id], character_id: character.id).average(:point).floor %></p>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

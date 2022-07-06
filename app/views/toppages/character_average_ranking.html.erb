@@ -1,0 +1,21 @@
+<div class="text-center mb-5">
+  <h1 class="h2 mt-5">平均撃破数ランキング</h1>
+  <p class="mt-5"><%= link_to '合計撃破数ランキング', '/character_total_ranking', class: 'btn btn-lg btn-primary' %></p>
+  <p class="mt-5"><%= link_to '最高撃破数ランキング', '/character_max_ranking', class: 'btn btn-lg btn-primary' %></p>
+  <p class="mt-5"><%= link_to '平均撃破数ランキング', '/character_average_ranking', class: 'btn btn-lg btn-primary' %></p>
+  <% if BattleRecord.find_by(user_id: session[:user_id]) %>
+    <div class="row mt-5">
+      <table class="table table-bordered offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10">
+        <% @ranking = 1 %>
+        <% @character_id_order_by_average.each do |character_id| %>
+          <tr>
+            <th class="align-middle" width="20%"><%= @ranking %></th>
+            <th width="50%"><img class="rounded" src=<%= "/characters/#{Character.find_by(id: character_id).image}" %> alt="Character" width="90px" height="90px"></th>
+            <th class="align-middle" width="30%"><%= BattleRecord.where(user_id: session[:user_id], character_id: character_id).average(:point).floor %></th>
+          </tr>
+          <% @ranking += 1 %>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+</div>

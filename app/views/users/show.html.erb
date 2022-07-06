@@ -1,0 +1,17 @@
+<div class="text-center mb-5">
+  <h1><%= @user.name %></h1>
+  <div class="row mt-5">
+    <table class="offset-lg-3 col-lg-6 table table-bordered">
+      <tr>
+        <td>お名前</td>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= @user.email %></td>
+      </tr>
+    </table>
+  </div>
+  <p class="mt-5"><%= link_to '登録情報編集', edit_user_path(@user), class: 'btn btn-lg btn-primary' %></p>
+  <p class="mt-5"><%= link_to 'アカウントを削除する', user_path(@user), method: :delete, data: {confirm: "本当に削除しますか？"}, class: 'text-danger' %></p>
+</div>

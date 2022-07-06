@@ -1,0 +1,2 @@
+class CharacterCategory < ApplicationRecord
+end

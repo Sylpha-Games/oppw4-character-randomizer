@@ -1,0 +1,42 @@
+<div class="text-center mb-5">
+  <p>
+    <img class="rounded" src=<%= "/stages/#{@stage.image}" %> alt="Stage" width="320px" height="320px">
+  </p>
+  <h1 class="h3 font-weight-bold mb-3"><%= @rank.name %></h1>
+  <h1 class="h3 font-weight-bold mb-3"><%= @stage.name %></h1>
+  <% if BattleRecord.find_by(user_id: session[:user_id], rank_id: @rank_id, stage_id: @stage.id) %>
+    <% @max_point_record = BattleRecord.where(user_id: session[:user_id], rank_id: @rank_id, stage_id: @stage.id).order(point: :desc).first %>
+    <% @max_point = @max_point_record.point %>
+    <% @character = Character.find_by(id: @max_point_record.character_id) %>
+  <% else %>
+    <% @max_point = 0 %>
+    <% @character = Character.find(1) %>
+  <% end %>
+  <% if @max_point != 0 %>
+    <p class="font-weight-bold"><span class="fa fa-crown mr-2"></span><%= @character.name %><br>（<%= @max_point %>p）</p>
+    <p class="font-weight-bold h5 mb-3">平均：<%= BattleRecord.where(user_id: session[:user_id], rank_id: @rank_id, stage_id: @stage.id).average(:point).floor %>p</p>
+  <% end %>
+  <div class="row mt-5">
+    <table class="offset-lg-3 col-lg-6 table table-bordered">
+      <tr>
+        <th>キャラ</th>
+        <th>最高</th>
+        <th>合計</th>
+      </tr>
+      <% @character_id = 1 %>
+      <% while @character_id <= @characters_count %>
+        <tr>
+          <th><%= Character.find(@character_id).name %></th>
+          <% if BattleRecord.find_by(user_id: session[:user_id], character_id: @character_id, rank_id: @rank_id, stage_id: @stage.id) %>
+            <th><%= BattleRecord.where(user_id: session[:user_id], character_id: @character_id, rank_id: @rank_id, stage_id: @stage.id).maximum(:point) %>p</th>
+            <th><%= BattleRecord.where(user_id: session[:user_id], character_id: @character_id, rank_id: @rank_id, stage_id: @stage.id).sum(:point) %>p</th>
+          <% else %>
+            <th>0</th>
+            <th>0</th>
+          <% end %>
+        </tr>
+        <% @character_id += 1 %>
+      <% end %>
+    </table>
+  </div>
+</div>

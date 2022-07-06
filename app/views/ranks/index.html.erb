@@ -1,0 +1,13 @@
+<div class="text-center mb-5">
+  <h1>ランク一覧</h1>
+  <div class="row mt-5">
+    <% @ranks.each do |rank| %>
+      <div class="col-xl-6 border pt-5 pb-3">
+        <p>
+          <img class="rounded" src=<%= "/ranks/#{rank.image}" %> alt="Rank" width="320px" height="180px">
+        </p>
+        <p><%= link_to rank.name, rank_path(rank), class: 'font-weight-bold h4' %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

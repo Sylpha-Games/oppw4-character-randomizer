@@ -1,0 +1,39 @@
+<div class="text-center mb-5">
+  <% if @character %>
+    <p>
+      <img class="rounded mx-auto" src=<%= "/characters/#{@character.image}" %> alt="Character" width="320px" height="320px">
+    </p>
+    <% if login? %>
+      <p><%= link_to @character.name, character_path(@character), class: 'font-weight-bold h3' %></p>
+      <% if @average_point %>
+        <p class="font-weight-bold h4 mb-3">平均：<%= @average_point %>p</p>
+      <% end %>
+    <% else %>
+      <p class="font-weight-bold h3"><%= @character.name %></p>
+    <% end %>
+  <% end %>
+  <p class="mt-5"><%= link_to 'キャラランダム生成', '/characters/random', method: :post, class: 'btn btn-lg btn-primary' %></p>
+  <% if login? %>
+    <% if @character %>
+      <p class="mt-5"><%= link_to '撃破数登録', "/battle_records/new/#{@character.id}", class: 'btn btn-lg btn-primary' %></p>
+      <p class="mt-5"><%= link_to 'ランダム生成削除', '/characters/random_destroy', method: :post, data: {confirm: "削除しますか？"}, class: 'btn btn-lg btn-danger' %></p>
+    <% end %>
+    <div class="mt-5">
+      <% if BattleRecord.find_by(user_id: session[:user_id]) %>
+        <% @battle_records.each do |battle_record| %>
+          <p class="font-weight-bold h4 mt-3"><%= link_to battle_record.created_at.to_s(:datetime_jp), edit_battle_record_path(battle_record), class: 'font-weight-bold h5' %></p>
+          <div class="row">
+            <table class="table table-bordered offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10">
+              <tr>
+                <th class="w-25"><img class="rounded" src=<%= "/characters/#{battle_record.character.image}" %> alt="Character" width="90px" height="90px"></th>
+                <th class="w-25"><img class="rounded" src=<%= "/ranks/#{battle_record.rank.image}" %> alt="Rank" width="160px" height="90px"></th>
+                <th class="w-25"><img class="rounded" src=<%= "/stages/#{battle_record.stage.image}" %> alt="Stage" width="90px" height="90px"></th>
+                <th class="w-25 align-middle"><%= battle_record.point %>p</th>
+              </tr>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
